@@ -1,0 +1,7 @@
+project\configuration\SpringConfiguration.class
+project\service\MyService.class
+project\configuration\SpringWebAppConfiguration.class
+project\security\MySecurity.class
+project\model\MyModel.class
+project\controllers\MainPageController.class
+project\TradeBoardApplication.class
