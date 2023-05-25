@@ -1,0 +1,56 @@
+main {
+    min-height: 97vh;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.color-white,
+.color-white:hover,
+.color-white:focus,
+.color-white:active {
+    color: white;
+}
+
+/* Header button */
+.header-btn {
+    transition: 0.08s;
+    background-color: purple;
+}
+
+.header-btn:hover,
+.header-btn:focus,
+.header-btn:active {
+    background-color: #6b006b;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle:focus,
+.dropdown-toggle:active {
+    background-color: #6b006b;
+}
+
+/* Search bar */
+.search-bar:hover {
+    background-color: #6b006b;
+}
+
+.clear-input,
+.clear-input:focus,
+.clear-input:active {
+    outline: none;
+    border: black;
+    box-shadow: none;
+    outline-offset: 0;
+}
+
+/* Favorites icon */
+.favorites {
+    font-size: 1.8rem;
+    transition: 0.18s;
+}
+
+.favorites:hover {
+    scale: 1.05;
+}
