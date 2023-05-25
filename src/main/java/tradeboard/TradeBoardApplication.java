@@ -1,4 +1,4 @@
-package project;
+package tradeboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class TradeBoardApplication {
-    /**
-     * Точка входа.
-     * @param args аргументы
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(TradeBoardApplication.class, args);
-    }
+	/**
+	 * Точка входа.
+	 * @param args аргументы
+	 */
+	public static void main(String[] args) {
+		SpringApplication.run(TradeBoardApplication.class, args);
+	}
 }
