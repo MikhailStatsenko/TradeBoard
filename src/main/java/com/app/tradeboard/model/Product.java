@@ -1,15 +1,19 @@
 package com.app.tradeboard.model;
 
+import com.app.tradeboard.utils.Enums.ProductCategory;
+import com.app.tradeboard.utils.Enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,6 +27,10 @@ public class Product {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private ProductCategory category;
 
     @Column(name = "price")
     private double price;

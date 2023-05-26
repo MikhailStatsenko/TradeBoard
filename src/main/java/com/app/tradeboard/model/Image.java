@@ -19,7 +19,7 @@ public class Image {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "original_fiile_name")
+    @Column(name = "original_file_name")
     private String originalFileName;
 
     @Column(name = "size")
@@ -32,7 +32,7 @@ public class Image {
     private boolean isPreviewImage;
 
     @Lob
-    @Column(name = "bytes")
+//    @Column(name = "bytes", columnDefinition = "bytea")
     private byte[] bytes;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

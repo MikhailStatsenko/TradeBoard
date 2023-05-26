@@ -64,6 +64,7 @@ main {
 
 /* auth-form */
 .auth-form {
-    border: 1px solid #dcdcdc;
+    border: 1px solid #e6e6e6;
     border-radius: 7px;
+    background-color: #fcfcfc;
 }
