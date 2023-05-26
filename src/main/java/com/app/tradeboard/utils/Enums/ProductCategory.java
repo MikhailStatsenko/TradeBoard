@@ -1,4 +1,4 @@
-package tradeboard.utils;
+package com.app.tradeboard.utils.Enums;
 
 public enum ProductCategory {
     ELECTRONICS,

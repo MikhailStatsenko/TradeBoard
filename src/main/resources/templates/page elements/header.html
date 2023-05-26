@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Шаблон страницы</title>
-  <link rel="icon" type="image/ico" href="/static/images/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/static/css/style.css" rel="stylesheet">
+  <title></title>
 </head>
 <body>
-<header>
+<header  th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <div class="collapse navbar-collapse d-flex align-items-center justify-content-between" id="navbarNavDropdown">
       <a class="navbar-brand" href="#">TradeBoard</a>
       <div class="dropdown">
-        <button class="btn header-btn color-white dropdown-toggle ps-3 p-2 rounded-3" type="button" id="category-dropdown" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn purple-btn color-white dropdown-toggle ps-3 p-2 rounded-3" type="button" id="category-dropdown" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Категории
         </button>
         <ul class="dropdown-menu mt-2" aria-labelledby="dropdown">
-          <li th:each="category : ${categories}"><a href="#" class="dropdown-item" th:text="#{${category.name()}}"></a></li>
+          <li><a href="#" class="dropdown-item">Электроника</a></li>
+          <li><a href="#" class="dropdown-item">Одежда и аксессуары</a></li>
+          <li><a href="#" class="dropdown-item">Мебель и интерьер</a></li>
+          <li><a href="#" class="dropdown-item">Красота и здоровье</a></li>
+          <li><a href="#" class="dropdown-item">Детские товары</a></li>
+          <li><a href="#" class="dropdown-item">Хобби и развлечения</a></li>
+          <li><a href="#" class="dropdown-item">Автомобили и транспорт</a></li>
         </ul>
       </div>
       <form class="form-inline my-2 my-lg-0">
@@ -30,12 +33,15 @@
         </div>
       </form>
       <a class="nav-link" href="#"><i class="far fa-heart favorites"></i></a>
-      <a class="nav-link" href="#">Вход и регистрация</a>
-      <a class="nav-link" href="#"><button class="btn header-btn color-white p-2 rounded-3">Разместить объявление</button></a>
+      <a class="nav-link" sec:authorize="!isAuthenticated()" href="/auth/login">Вход и регистрация</a>
+      <div sec:authorize="isAuthenticated()" class="nav-item">
+        <form th:action="@{/logout}" method="POST">
+          <span th:text="${#authentication.principal.name}"></span> (<input class="nav-link d-inline text-decoration-underline" type="submit" value="Выйти">)
+        </form>
+      </div>
+      <a class="nav-link" href="#"><button class="btn purple-btn color-white p-2 rounded-3">Разместить объявление</button></a>
     </div>
   </nav>
 </header>
-<script src="/static/js/popper.min.js" ></script>
-<script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>
