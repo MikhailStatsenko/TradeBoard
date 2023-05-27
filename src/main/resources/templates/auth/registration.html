@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <title>Регистрация</title>
   <link rel="icon" type="image/ico" href="/static/images/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="/static/css/fontawesome/all.min.css"/>
   <link href="/static/css/bootstrap.min.css" rel="stylesheet">
   <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
   <div th:replace="~{'/page elements/header' :: header}"></div>
 
-  <main style="display: flex; min-height: 80vh; align-items: center">
-    <div class="container auth-form col-xl-4 col-lg-6 col-md-8 col-sm-11 auth-form">
+  <main style="display: flex; align-items: center">
+    <div class="container auth-form col-xl-4 col-lg-6 col-md-8 col-sm-11 auth-form mt-5">
       <form class="m-4" th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
         <h4>Регистрация</h4>
         <div class="mb-3">
@@ -31,6 +31,10 @@
           <input type="tel" th:field="*{phoneNumber}" id="phone_number" class="form-control" required>
         </div>
         <div class="mb-3">
+          <label for="telegram_id" class="form-label">Никнейм Telegram </label>
+          <input type="text" th:field="*{telegramId}" id="telegram_id" class="form-control" pattern="^@[A-Za-z0-9_]{5,}$" required>
+        </div>
+        <div class="mb-3">
           <label for="password" class="form-label">Пароль </label>
           <input type="password" th:field="*{password}" id="password" class="form-control" required>
           <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
@@ -47,5 +51,24 @@
 
   <script src="/static/js/popper.min.js" ></script>
   <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/header script.js"></script>
+  <script>
+      document.getElementById('phone_number').addEventListener('input', function (event) {
+          const phoneNumber = event.target.value;
+          event.target.value = formatPhoneNumber(phoneNumber);
+      });
+
+      function formatPhoneNumber(phoneNumber) {
+          const formattedNumber = phoneNumber.replace(/\D/g, '');
+          const parts = [];
+          parts.push(formattedNumber.substring(0, 1));
+          parts.push(formattedNumber.substring(1, 4));
+          parts.push(formattedNumber.substring(4, 7));
+          parts.push(formattedNumber.substring(7, 9));
+          parts.push(formattedNumber.substring(9, 11));
+          return parts.filter(Boolean).join(' ');
+      }
+  </script>
+
 </body>
 </html>

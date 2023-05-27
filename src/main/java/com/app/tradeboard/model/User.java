@@ -43,6 +43,9 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "telegram_id")
+    private String telegramId;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;

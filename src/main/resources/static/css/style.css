@@ -2,10 +2,13 @@ main {
     min-height: 90vh;
 }
 
-.margin-top-70 {
-    margin-top: 70px;
+.margin-top-80 {
+    margin-top: 80px;
 }
 
+.padding-top-80 {
+    padding-top: 80px;
+}
 .purple {
     background-color: purple;
 }
@@ -69,7 +72,7 @@ main {
 
 /* Favorites icon */
 .favorites {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     transition: 0.18s;
 }
 
@@ -108,12 +111,26 @@ main {
     height: calc(7.5rem + 7vh);
 }
 
+.carousel-img-container {
+    background-color: #f2f2f2;
+    height: 360px;
+    width: 640px;
+}
+
+.carousel-inner .image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
 .ad-block {
     overflow: hidden;
     background-color: #f8f8f8;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    max-height: 25rem;
 }
 
 @media (max-width: 1000px) {
@@ -125,4 +142,15 @@ main {
 .header-shadow {
     transition: 0.2s;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    transition: 0.1s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-control-next-icon:active,
+.carousel-control-prev-icon:active {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15);
 }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Добавить товар</title>
   <link rel="icon" type="image/ico" href="/images/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="/static/css/fontawesome/all.min.css"/>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
 
   <main>
     <div class="container">
-      <h3 class="mt-2">Разместить объявление</h3>
+      <h3 class="padding-top-80">Разместить объявление</h3>
       <form th:action="@{/product/new}" th:method="POST" enctype="multipart/form-data">
         <input type="hidden" name="userId" th:value="${#authentication.principal.id}">
         <div class="form-group">
@@ -74,32 +74,10 @@
 
   <div th:replace="~{'/page elements/footer' :: footer}"></div>
 
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/popper.min.js" ></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script>
-      $(document).ready(function() {
-          $('.btn-add-characteristic').click(function() {
-              const $characteristics = $('#characteristics');
-              const index = $characteristics.find('input').length / 2;
-              const html = '<div class="row mt-2">' +
-                  '<div class="col-5">' +
-                  '<input type="text" class="form-control" name="characteristics.keys" placeholder="Название характеристики">' +
-                  '</div>' +
-                  '<div class="col-5">' +
-                  '<input type="text" class="form-control" name="characteristics.values" placeholder="Значение">' +
-                  '</div>' +
-                  '<div class="col-2">' +
-                  '<button type="button" class="btn btn-outline-secondary btn-remove-characteristic">Удалить</button>' +
-                  '</div>' +
-                  '</div>';
-              $characteristics.append(html);
-          });
-
-          $(document).on('click', '.btn-remove-characteristic', function() {
-              $(this).closest('.row').remove();
-          });
-      });
-  </script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/popper.min.js" ></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/header script.js"></script>
+  <script src="/static/js/add characteristics field.js"></script>
 </body>
 </html>
