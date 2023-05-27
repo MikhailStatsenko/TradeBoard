@@ -1,19 +1,19 @@
 package com.app.tradeboard.model;
 
 import com.app.tradeboard.utils.Enums.ProductCategory;
-import com.app.tradeboard.utils.Enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -48,6 +48,11 @@ public class Product {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "placement_date")
+    private LocalDate placementDate;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
     private List<Image> images;
 
@@ -61,11 +66,20 @@ public class Product {
     @ManyToMany(mappedBy = "favoriteProducts")
     private List<User> favoritedByUsers;
 
+    @PrePersist
+    private void onCreate() {
+        placementDate = LocalDate.now();
+    }
+
     public void addImage(Image image) {
         if (images == null)
             images = new ArrayList<>();
         images.add(image);
         image.setProduct(this);
+    }
+
+    public void addCharacteristic(String key, String value) {
+        characteristics.put(key, value);
     }
 }
 

@@ -1,28 +1,23 @@
 package com.app.tradeboard.controller;
 
+import com.app.tradeboard.model.User;
+import com.app.tradeboard.service.RegistrationService;
+import com.app.tradeboard.utils.UserValidator;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.app.tradeboard.model.User;
-import com.app.tradeboard.service.RegistrationService;
-import com.app.tradeboard.utils.UserValidator;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
     private final UserValidator userValidator;
     private final RegistrationService registrationService;
-
-    @Autowired
-    public AuthController(RegistrationService registrationService, UserValidator userValidator) {
-        this.userValidator = userValidator;
-        this.registrationService = registrationService;
-    }
 
     @GetMapping("/login")
     public String loginPage() {

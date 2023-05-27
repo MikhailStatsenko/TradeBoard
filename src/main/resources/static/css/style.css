@@ -2,6 +2,10 @@ main {
     min-height: 90vh;
 }
 
+.margin-top-70 {
+    margin-top: 70px;
+}
+
 .purple {
     background-color: purple;
 }
@@ -18,6 +22,17 @@ main {
 .color-purple:focus,
 .color-purple:active {
     color: purple;
+}
+
+.color-gray,
+.color-gray:hover,
+.color-gray:focus,
+.color-gray:active {
+    color: gray;
+}
+
+.transition-0-15 {
+    transition: 0.15s;
 }
 
 /* Header button */
@@ -62,9 +77,52 @@ main {
     scale: 1.05;
 }
 
-/* auth-form */
 .auth-form {
     border: 1px solid #e6e6e6;
     border-radius: 7px;
     background-color: #fcfcfc;
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        width: 47%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .product-card {
+        width: 23%;
+        float: left;
+    }
+}
+
+.product-preview-image {
+    object-fit: cover;
+    height: calc(7.5rem + 7vh);
+}
+
+.ad-block {
+    overflow: hidden;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+    .ad-block {
+        display: none;
+    }
+}
+
+.header-shadow {
+    transition: 0.2s;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }

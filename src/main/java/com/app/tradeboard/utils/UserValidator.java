@@ -1,11 +1,11 @@
 package com.app.tradeboard.utils;
 
+import com.app.tradeboard.model.User;
 import com.app.tradeboard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import com.app.tradeboard.model.User;
 
 @Component
 public class UserValidator implements Validator {

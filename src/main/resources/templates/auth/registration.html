@@ -9,7 +9,7 @@
   <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
-  <div th:replace="'/page elements/header' :: header"></div>
+  <div th:replace="~{'/page elements/header' :: header}"></div>
 
   <main style="display: flex; min-height: 80vh; align-items: center">
     <div class="container auth-form col-xl-4 col-lg-6 col-md-8 col-sm-11 auth-form">
@@ -43,7 +43,7 @@
     </div>
   </main>
 
-  <div th:replace="'/page elements/footer' :: footer"></div>
+  <div th:replace="~{'/page elements/footer' :: footer}"></div>
 
   <script src="/static/js/popper.min.js" ></script>
   <script src="/static/js/bootstrap.min.js"></script>

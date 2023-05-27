@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org"
->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>TradeBoard</title>
@@ -10,15 +9,65 @@
   <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
-  <div th:replace="'/page elements/header' :: header"></div>
+<div th:replace="~{'/page elements/header' :: header}"></div>
 
-  <main>
-    <div th:each="product : ${products}" th:text="product"></div>
-  </main>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 margin-top-70">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="card-columns">
+                <div th:each="product : ${products}">
+                  <div class="card product-card m-lg-2 m-md-2 m-sm-1">
+                    <img th:attr="src=${product.previewImageId == 0 ? '/static/images/no-image.jpg' : '/images/' + product.previewImageId}" class="card-img-top product-preview-image" alt="Product Image">
+                    <div class="card-body pt-1">
+                      <a th:href="@{/product/{id}(id=${product.id})}" class="color-purple link-offset-2 link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover transition-0-15"><h5 class="card-title my-2" th:text="${product.title}"></h5></a>
+                      <div class="card-text my-0"><b><span class="price" th:text="${product.price}"></span> ₽</b></div>
+                      <div class="card-text my-0 color-gray">г. <span th:text="${product.city}"></span></div>
+                      <div class="card-text my-0 color-gray">Выставлено: <span th:text="${#temporals.format(product.placementDate, 'dd.MM.yyyy')}"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 margin-top-70">
+        <div th:replace="~{'/page elements/aside' :: aside}"></div>
+      </div>
+    </div>
+  </div>
+</main>
 
-  <div th:replace="'/page elements/footer' :: footer"></div>
+<div th:replace="~{'/page elements/footer' :: footer}"></div>
 
-  <script src="/static/js/popper.min.js" ></script>
-  <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/popper.min.js" ></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/header script.js"></script>
+<script>
+    const priceElements = document.querySelectorAll('.price');
+
+    priceElements.forEach((priceElement) => {
+        const price = parseFloat(priceElement.innerText);
+
+        // Убираем знаки после запятой, если число целое
+        const formattedPrice = price % 1 === 0 ? price.toFixed(0) : price.toLocaleString('ru-RU', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).replace('.', ',');
+
+        // Добавляем разделение пробелами для больших чисел
+        const parts = formattedPrice.split(',');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+        const finalPrice = parts.join(',');
+
+        priceElement.innerText = finalPrice;
+    });
+</script>
+
 </body>
 </html>

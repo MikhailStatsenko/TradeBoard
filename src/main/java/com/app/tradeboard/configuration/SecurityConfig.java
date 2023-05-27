@@ -1,5 +1,6 @@
 package com.app.tradeboard.configuration;
 
+import com.app.tradeboard.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -8,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.app.tradeboard.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity
@@ -34,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/", "/auth/**", "/error", "/static/**").permitAll()
+                .requestMatchers("/", "/auth/**", "/error", "/static/**", "/images/**").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
             )
             .formLogin(form -> form

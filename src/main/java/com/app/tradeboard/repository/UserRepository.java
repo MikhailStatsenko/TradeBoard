@@ -1,8 +1,8 @@
 package com.app.tradeboard.repository;
 
+import com.app.tradeboard.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.app.tradeboard.model.User;
 
 import java.util.Optional;
 
