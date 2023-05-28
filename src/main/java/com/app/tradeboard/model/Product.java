@@ -5,14 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
@@ -49,7 +45,7 @@ public class Product {
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "placement_date")
     private LocalDate placementDate;
 
@@ -96,16 +92,14 @@ public class Product {
         }
     }
 
+    public void removeFromUsers(long userId) {
+        for (int i = 0; i < users.size(); i++) {
+            if (Objects.equals(users.get(i).getId(), userId))
+                users.remove(i);
+        }
+    }
 
     public void addCharacteristic(String key, String value) {
         characteristics.put(key, value);
     }
 }
-
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(name = "user_favorite_products",
-//            joinColumns = @JoinColumn(name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    private List<User> favoritedByUsers;

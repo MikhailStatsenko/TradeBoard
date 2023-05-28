@@ -7,10 +7,8 @@ import com.app.tradeboard.service.UserService;
 import com.app.tradeboard.utils.Enums.ProductCategory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,8 +23,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public String fullInfoProductPage(@PathVariable long id, Model model) {
+    public String fullInfoProductPage(@PathVariable long id, Authentication authentication, Model model) {
         Product product = productService.findById(id);
+
+        model.addAttribute("favored",
+                productService.isFavored(product, (User) authentication.getPrincipal()));
         model.addAttribute("product", product);
         return "product/product-info";
     }
@@ -46,8 +47,17 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/favorites")
+    public String favoritesPage(Model model,
+                                Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("favoriteProducts", user.getFavorites());
+        return "/product/favorites";
+    }
+
     @PostMapping("/add-to-favorites/{productId}")
-    public String addToFavorites(@PathVariable long productId, Authentication authentication) {
+    public String addToFavorites(@PathVariable long productId,
+                                 Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Product product = productService.findById(productId);
 
@@ -58,20 +68,16 @@ public class ProductController {
         return "redirect:/product/" + productId;
     }
 
-    @PostMapping("/remove-from-favorites")
-    @ResponseBody
-    public ResponseEntity<String> removeFromFavorites(@RequestParam("productId") long productId , Authentication authentication) {
+    @PostMapping("/remove-from-favorites/{productId}")
+    public String removeFromFavorites(@PathVariable long productId,
+                                      Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-
         Product product = productService.findById(productId);
 
-        if (user != null && product != null) {
-            if (user.getFavorites().contains(product)) {
-                user.removeFavorite(product);
-                userService.saveUser(user);
-                return ResponseEntity.ok("Product removed from favorites");
-            }
+        if (user != null && product != null && productService.isFavored(product, user)) {
+            user.removeFavorite(product);
+            userService.saveUser(user);
         }
-        return ResponseEntity.badRequest().build();
+        return "redirect:/product/" + productId;
     }
 }

@@ -8,15 +8,11 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -65,19 +61,23 @@ public class User implements UserDetails {
     }
 
     public void addFavorite(Product product) {
+        System.out.println(favorites);
         if (favorites == null)
             favorites = new ArrayList<>();
         favorites.add(product);
         product.getUsers().add(this);
+        System.out.println(favorites);
     }
 
     public void removeFavorite(Product product) {
         if (favorites != null) {
-            favorites.remove(product);
-            product.getUsers().remove(this);
+            for (int i = 0; i < favorites.size(); i++) {
+                if (Objects.equals(favorites.get(i).getId(), product.getId()))
+                    favorites.remove(i);
+            }
+            product.removeFromUsers(id);
         }
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -114,24 +114,3 @@ public class User implements UserDetails {
         return true;
     }
 }
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_favorite_products",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id"))
-//    private List<Product> favoriteProducts;
-//
-//
-//    public void addFavoriteProduct(Product product) {
-//        if (favoriteProducts == null) {
-//            favoriteProducts = new ArrayList<>();
-//        }
-//        favoriteProducts.add(product);
-//    }
-//
-//    public void removeFavoriteProduct(Product product) {
-//        if (favoriteProducts != null) {
-//            favoriteProducts.remove(product);
-//        }
-//    }

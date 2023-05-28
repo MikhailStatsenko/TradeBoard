@@ -5,6 +5,7 @@ import com.app.tradeboard.model.Product;
 import com.app.tradeboard.model.User;
 import com.app.tradeboard.repository.ProductRepository;
 import com.app.tradeboard.repository.UserRepository;
+import com.app.tradeboard.utils.Enums.ProductCategory;
 import com.app.tradeboard.utils.Exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +30,10 @@ public class ProductService {
 
     public Product findById(long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    public List<Product> findByCategory(ProductCategory category) {
+        return productRepository.findAllByCategory(category);
     }
 
     @Transactional
@@ -87,6 +93,13 @@ public class ProductService {
         image.setSize(file.getSize());
         image.setBytes(file.getBytes());
         return image;
+    }
+
+    public boolean isFavored(Product product, User user) {
+        for (Product prod : user.getFavorites())
+            if (Objects.equals(prod.getId(), product.getId()))
+                return true;
+        return false;
     }
 
 }
