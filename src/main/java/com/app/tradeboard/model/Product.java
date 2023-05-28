@@ -53,7 +53,8 @@ public class Product {
     @Column(name = "placement_date")
     private LocalDate placementDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            mappedBy = "product", orphanRemoval = true)
     private List<Image> images;
 
     @Column(name = "preview_image_id")
@@ -63,8 +64,11 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "favoriteProducts")
-    private List<User> favoritedByUsers;
+    @ManyToMany
+    @JoinTable(name = "favorite_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 
     @PrePersist
     private void onCreate() {
@@ -78,8 +82,30 @@ public class Product {
         image.setProduct(this);
     }
 
+    public void addUser(User user) {
+        if (users == null)
+            users = new ArrayList<>();
+        users.add(user);
+        user.getProducts().add(this);
+    }
+
+    public void removeUser(User user) {
+        if (users != null) {
+            users.remove(user);
+            user.getProducts().remove(this);
+        }
+    }
+
+
     public void addCharacteristic(String key, String value) {
         characteristics.put(key, value);
     }
 }
 
+
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.REFRESH, CascadeType.DETACH})
+//    @JoinTable(name = "user_favorite_products",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private List<User> favoritedByUsers;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ImageService {
     private final ImageRepository imageRepository;
 
-    public Image getImageById(long id) {
+    public Image findById(long id) {
         return imageRepository.findById(id).orElse(null);
     }
 }

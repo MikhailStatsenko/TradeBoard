@@ -4,13 +4,19 @@ import com.app.tradeboard.model.User;
 import com.app.tradeboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
 
-    public User getUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElse(null);
+    }
+
+    @Transactional
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }

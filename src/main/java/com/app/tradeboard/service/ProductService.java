@@ -9,6 +9,7 @@ import com.app.tradeboard.utils.Exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -21,16 +22,17 @@ public class ProductService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public List<Product> getAllProducts() {
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    public Product getProductById(long id) {
+    public Product findById(long id) {
         return productRepository.findById(id).orElse(null);
     }
 
-    public void addProduct(Product product, long userId,
-                           HttpServletRequest request, MultipartFile[] images) throws IOException {
+    @Transactional
+    public void add(Product product, long userId,
+                    HttpServletRequest request, MultipartFile[] images) throws IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
         String[] keys = parameterMap.get("characteristics.keys");
         String[] values = parameterMap.get("characteristics.values");

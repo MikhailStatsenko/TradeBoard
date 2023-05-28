@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,11 +54,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_favorite_products",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> favoriteProducts;
+    @ManyToMany(mappedBy = "users",  fetch = FetchType.EAGER)
+    private List<Product> favorites;
 
     public void addProduct(Product product) {
         if (products == null)
@@ -66,20 +64,20 @@ public class User implements UserDetails {
         product.setUser(this);
     }
 
-    public void addFavoriteProduct(Product product) {
-        if (favoriteProducts == null) {
-            favoriteProducts = new ArrayList<>();
-        }
-        favoriteProducts.add(product);
-        product.getFavoritedByUsers().add(this);
+    public void addFavorite(Product product) {
+        if (favorites == null)
+            favorites = new ArrayList<>();
+        favorites.add(product);
+        product.getUsers().add(this);
     }
 
-    public void removeFavoriteProduct(Product product) {
-        if (favoriteProducts != null) {
-            favoriteProducts.remove(product);
-            product.getFavoritedByUsers().remove(this);
+    public void removeFavorite(Product product) {
+        if (favorites != null) {
+            favorites.remove(product);
+            product.getUsers().remove(this);
         }
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -117,3 +115,23 @@ public class User implements UserDetails {
     }
 }
 
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_favorite_products",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id"))
+//    private List<Product> favoriteProducts;
+//
+//
+//    public void addFavoriteProduct(Product product) {
+//        if (favoriteProducts == null) {
+//            favoriteProducts = new ArrayList<>();
+//        }
+//        favoriteProducts.add(product);
+//    }
+//
+//    public void removeFavoriteProduct(Product product) {
+//        if (favoriteProducts != null) {
+//            favoriteProducts.remove(product);
+//        }
+//    }

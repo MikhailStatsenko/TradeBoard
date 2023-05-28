@@ -53,9 +53,12 @@
                     </button>
                   </th:block>
 <!--                  В избранное-->
-                  <button class="btn btn-outline-dark position-absolute top-0 end-0 m-3 z-1" style="background-color: rgba(243,243,243,0.66)">
-                    <span>В избранное </span><i class="far fa-heart"></i>
-                  </button>
+                  <form th:action="@{/product/add-to-favorites/{id}(id=${product.id})}" th:method="POST">
+                    <button class="btn btn-outline-dark position-absolute top-0 end-0 m-3 z-1"
+                            style="background-color: rgba(243,243,243,0.66)">
+                      <span>В избранное</span> <i class="far fa-heart"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
 
@@ -128,7 +131,41 @@
     }
 
     function redirectToTelegram(telegramId) {
-        window.location.href = 'https://t.me/' + telegramId.substring(1);
+        const url = 'https://t.me/' + telegramId.substring(1);
+        window.open(url, '_blank');
+    }
+</script>
+<script>
+    function addToFavorites() {
+        // const button = document.getElementById("favoriteButton");
+        // const isFavorite = button.classList.contains("btn-outline-danger");
+        // if (isFavorite) {
+        //     button.classList.remove("btn-outline-danger");
+        //     button.classList.add("btn-outline-dark");
+        // } else {
+        //     button.classList.remove("btn-outline-dark");
+        //     button.classList.add("btn-outline-danger");
+        // }
+
+        // fetch(url + productId, { method: 'POST' })
+        //     .then(response => {
+        //         if (response.ok) {
+        //             if (isFavorite) {
+        //                 button.classList.remove("btn-outline-danger");
+        //                 button.classList.add("btn-outline-dark");
+        //                 console.log('Product removed from favorites');
+        //             } else {
+        //                 button.classList.remove("btn-outline-dark");
+        //                 button.classList.add("btn-outline-danger");
+        //                 console.log('Product added to favorites');
+        //             }
+        //         } else {
+        //             console.log('Failed to update favorites');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('An error occurred:', error);
+        //     });
     }
 </script>
 </body>
