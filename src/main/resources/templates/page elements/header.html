@@ -20,13 +20,14 @@
           <li><a href="/?category=FURNITURE_AND_INTERIOR" class="dropdown-item">Мебель и интерьер</a></li>
           <li><a href="/?category=BEAUTY_AND_HEALTH" class="dropdown-item">Красота и здоровье</a></li>
           <li><a href="/?category=CHILDREN_PRODUCTS" class="dropdown-item">Детские товары</a></li>
-          <li><a href="/?category=SPORT_AND_RECREATION" class="dropdown-item">Хобби и развлечения</a></li>
+          <li><a href="/?category=HOBBIES_AND_ENTERTAINMENT" class="dropdown-item">Хобби и развлечения</a></li>
           <li><a href="/?category=AUTOMOBILES_AND_TRANSPORT" class="dropdown-item">Автомобили и транспорт</a></li>
         </ul>
       </div>
-      <form class="form-inline my-2 my-lg-0">
+      <form th:action="@{/product/search}" class="form-inline my-2 my-lg-0" method="get">
         <div class="input-group purple search-bar p-1 rounded-3">
-          <input type="text" class="form-control clear-input" style="min-width: 40vw" placeholder="Поиск" aria-label="Поиск" aria-describedby="basic-addon2">
+          <input type="text" class="form-control clear-input" style="min-width: 40vw"
+                 placeholder="Поиск" aria-label="Поиск" aria-describedby="basic-addon2" name="keyword">
           <div class="input-group-append">
             <button class="btn color-white ms-1" type="submit">Найти</button>
           </div>

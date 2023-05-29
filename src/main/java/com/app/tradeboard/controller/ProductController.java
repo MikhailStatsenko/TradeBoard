@@ -5,6 +5,8 @@ import com.app.tradeboard.model.User;
 import com.app.tradeboard.service.ProductService;
 import com.app.tradeboard.service.UserService;
 import com.app.tradeboard.utils.Enums.ProductCategory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +24,14 @@ import java.io.IOException;
 public class ProductController {
     private final UserService userService;
     private final ProductService productService;
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
+        List<Product> products = productService.searchProducts(keyword.toLowerCase());
+        model.addAttribute("products", products);
+        model.addAttribute("keyword", keyword);
+        return "/product/search-results";
+    }
 
     @GetMapping("/{id}")
     public String fullInfoProductPage(@PathVariable long id, Authentication authentication, Model model) {

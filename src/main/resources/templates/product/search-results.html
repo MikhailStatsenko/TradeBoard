@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>TradeBoard</title>
+  <title>Результаты поиска</title>
   <link rel="icon" type="image/ico" href="/static/images/favicon.ico">
   <link rel="stylesheet" href="/static/css/fontawesome/all.min.css"/>
   <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +19,8 @@
           <div class="row">
             <div class="col">
               <div class="card-columns">
+                <h4 th:if="${products == null || products.isEmpty()}">Товаровы по запросу «<span th:text="${keyword}"></span>» не найдены</h4>
+                <h4 class="ps-2" th:unless="${products == null || products.isEmpty()}">Найденные товары по запосу «<span th:text="${keyword}"></span>»</h4>
                 <div th:each="product : ${products}">
                   <div class="card product-card m-lg-2 m-md-2 m-sm-1">
                     <img th:attr="src=${product.previewImageId == 0 ? '/static/images/no-image.jpg' : '/images/' + product.previewImageId}" class="card-img-top product-preview-image" alt="Product Image">

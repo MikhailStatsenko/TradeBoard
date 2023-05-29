@@ -7,8 +7,13 @@ import com.app.tradeboard.repository.ProductRepository;
 import com.app.tradeboard.repository.UserRepository;
 import com.app.tradeboard.utils.Enums.ProductCategory;
 import com.app.tradeboard.utils.Exceptions.UserNotFoundException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -102,6 +107,9 @@ public class ProductService {
         return false;
     }
 
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.searchProducts(keyword);
+    }
 }
 
 
