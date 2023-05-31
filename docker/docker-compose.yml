@@ -10,14 +10,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - :/var/lib/postgresql/data
+      - my-db:/var/lib/postgresql/data
   app:
     build: .
     ports:
       - "8080:8080"
     container_name: trade_board_app
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tradeboard #host.docker.internal
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tradeboard
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL-AUTO=update
@@ -25,3 +25,4 @@ services:
       - db
 volumes:
   my-db: {}
+
