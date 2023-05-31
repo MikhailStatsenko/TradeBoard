@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/tradeboard
     username: postgres
-    password: qwerty
+    password: postgres
     driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false
